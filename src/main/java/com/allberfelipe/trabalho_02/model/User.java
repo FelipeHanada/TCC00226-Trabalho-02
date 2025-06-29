@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "articles")
 @Entity
 public class User {
 
@@ -44,10 +44,5 @@ public class User {
         this.lastName = lastName;
         this.aboutMe = aboutMe;
         this.phoneNumber = phoneNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "User{id=" + id + ", name='" + firstName + " " + lastName + "'}";
     }
 }

@@ -46,9 +46,8 @@ public class Trabalho02Application implements CommandLineRunner {
 		Article article2 = new Article("title2", "description2", "", "conrtent", user);
 		articleRepository.save(article2);
 
-
 		System.out.println(articleRepository.findAllByAuthorId(101L));
 
-//		System.out.println(userRepository.findAll());
+		System.out.println(userRepository.findAll());
 	}
 }

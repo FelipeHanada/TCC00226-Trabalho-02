@@ -40,9 +40,4 @@ public class Article {
         this.contentMD = contentMD;
         this.author = author;
     }
-
-    @Override
-    public String toString() {
-        return "Article{id=" + id + ", title='" + title + "'}";
-    }
 }
