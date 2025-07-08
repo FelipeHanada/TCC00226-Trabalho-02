@@ -31,13 +31,21 @@ public class Trabalho02Application implements CommandLineRunner {
 					"nome",
 					"sobrenome",
 					"about_me",
-					"00123456789"
+					"00123456789",
+					""
 			);
 
 			userRepository.save(user);
 		}
 
-		User user = new User("email101@domain.br", "nome", "sobrenome", "about_me", "00123456789");
+		User user = new User(
+				"email101@domain.br",
+				"nome",
+				"sobrenome",
+				"about_me",
+				"00123456789",
+				""
+		);
 		userRepository.save(user);
 
 		Article article1 = new Article("title1", "description1", "", "conrtent", user);

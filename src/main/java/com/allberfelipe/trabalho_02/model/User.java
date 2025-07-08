@@ -34,15 +34,26 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "password_hash")
+    private String passwordHash;
+
     @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Article> articles;
 
-    public User(String email, String firstName, String lastName, String aboutMe, String phoneNumber) {
+    public User(
+            String email,
+            String firstName,
+            String lastName,
+            String aboutMe,
+            String phoneNumber,
+            String passwordHash
+    ) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.aboutMe = aboutMe;
         this.phoneNumber = phoneNumber;
+        this.passwordHash = passwordHash;
     }
 }

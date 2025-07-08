@@ -14,4 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select u from User u where u.id = :id")
     Optional<User> findByIdWithLock(@Param("id") Long id);
+
+    User findByEmailAndPasswordHash(@Param("email") String email, @Param("passwordHash") String passwordHash);
 }
