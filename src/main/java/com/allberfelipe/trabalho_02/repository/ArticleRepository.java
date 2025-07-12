@@ -23,4 +23,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query("select a from Article a left outer join fetch a.author where a.author.id = :author_id")
     Page<Article> findAllByAuthorId(@Param("author_id") Long authorId, Pageable pageable);
+
+    @Query("select a from User u join u.favorites a where u.id = :userId")
+    Page<Article> findFavoriteArticlesByUserId(@Param("userId") Long userId, Pageable pageable);
 }

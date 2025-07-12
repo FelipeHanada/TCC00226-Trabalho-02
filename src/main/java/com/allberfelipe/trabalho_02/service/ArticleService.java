@@ -1,7 +1,11 @@
 package com.allberfelipe.trabalho_02.service;
 
+import com.allberfelipe.trabalho_02.exception.ArticleNotFoundException;
+import com.allberfelipe.trabalho_02.exception.UserNotFoundException;
 import com.allberfelipe.trabalho_02.model.Article;
+import com.allberfelipe.trabalho_02.model.User;
 import com.allberfelipe.trabalho_02.repository.ArticleRepository;
+import com.allberfelipe.trabalho_02.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,11 +18,19 @@ public class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Article> getArticles() { return articleRepository.findAll(); }
 
     public Page<Article> getArticles(Pageable pageable) {
         return articleRepository.findAll(pageable);
+    }
+
+    public Article getArticleById(long articleId) {
+        return articleRepository.findById(articleId).orElseThrow(
+                () -> new ArticleNotFoundException("Article not found")
+        );
     }
 
     public Page<Article> getArticlesByAuthorId(long authorId, Pageable pageable) {
@@ -27,5 +39,20 @@ public class ArticleService {
 
     public Article createArticle(Article article) {
         return articleRepository.save(article);
+    }
+
+    public void addFavorite(long userId, long articleId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new ArticleNotFoundException("Article not found"));
+
+        user.addFavorite(article);
+        userRepository.save(user);
+    }
+
+    public Page<Article> getFavoriteArticles(long userId, Pageable pageable) {
+        return articleRepository.findFavoriteArticlesByUserId(userId, pageable);
     }
 }

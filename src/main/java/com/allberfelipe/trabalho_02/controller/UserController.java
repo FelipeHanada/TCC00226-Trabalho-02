@@ -9,8 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("user")
@@ -30,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(User user) {
+    public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 

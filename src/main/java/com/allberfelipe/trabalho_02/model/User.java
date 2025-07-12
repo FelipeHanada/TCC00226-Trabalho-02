@@ -8,11 +8,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = "articles")
+@ToString(exclude = {"articles", "favorites"})
 @Entity
 public class User {
 
@@ -20,6 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String email;
 
     @Column(name = "first_name")
@@ -39,7 +41,16 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "author")
-    private List<Article> articles;
+    private Set<Article> articles;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorites",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id")
+    )
+    @JsonIgnore
+    private List<Article> favorites;
 
     public User(
             String email,
@@ -55,5 +66,11 @@ public class User {
         this.aboutMe = aboutMe;
         this.phoneNumber = phoneNumber;
         this.passwordHash = passwordHash;
+    }
+
+    public void addFavorite(Article article) {
+        if (!favorites.contains(article)) {
+            favorites.add(article);
+        }
     }
 }

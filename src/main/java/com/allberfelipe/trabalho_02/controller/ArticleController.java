@@ -1,15 +1,16 @@
 package com.allberfelipe.trabalho_02.controller;
 
+import com.allberfelipe.trabalho_02.exception.TokenNotValidException;
 import com.allberfelipe.trabalho_02.model.Article;
 import com.allberfelipe.trabalho_02.model.PageResult;
+import com.allberfelipe.trabalho_02.model.User;
 import com.allberfelipe.trabalho_02.service.ArticleService;
+import com.allberfelipe.trabalho_02.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("http://localhost:5173")
 @RestController
@@ -19,6 +20,9 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private AuthService authService;
+
     @GetMapping
     public PageResult<Article> getArticles(
             @RequestParam(value = "page", defaultValue = "0") int pageIndex,
@@ -27,6 +31,11 @@ public class ArticleController {
         Pageable pageable = PageRequest.of(pageIndex, pageSize);
         Page<Article> page = articleService.getArticles(pageable);
         return new PageResult<>(page);
+    }
+
+    @GetMapping("{article_id}")
+    public Article getArticleById(@PathVariable("article_id") long articleId) {
+        return articleService.getArticleById(articleId);
     }
 
     @GetMapping("author/{author_id}")
@@ -41,7 +50,32 @@ public class ArticleController {
     }
 
     @PostMapping
-    public Article createArticle(Article article) {
+    public Article createArticle(@RequestBody Article article) {
         return articleService.createArticle(article);
+    }
+
+    @PostMapping("favorite/{articleId}")
+    public void addFavorite(
+            @PathVariable("articleId") long articleId,
+            @RequestParam(value = "token") String token
+    ) {
+        User loggedUser = authService.getUserByToken(token)
+                .orElseThrow(() -> new TokenNotValidException("Token not found"));
+
+        articleService.addFavorite(loggedUser.getId(), articleId);
+    }
+
+    @GetMapping("favorite/{token}")
+    public PageResult<Article> getFavoriteArticles(
+            @PathVariable("token") String token,
+            @RequestParam(value = "page", defaultValue = "0") int pageIndex,
+            @RequestParam(value = "pageSize", defaultValue = "5") int pageSize
+    ) {
+        User loggedUser = authService.getUserByToken(token)
+                .orElseThrow(() -> new TokenNotValidException("Token not found"));
+
+        Pageable pageable = PageRequest.of(pageIndex, pageSize);
+        Page<Article> page = articleService.getFavoriteArticles(loggedUser.getId(), pageable);
+        return new PageResult<>(page);
     }
 }
