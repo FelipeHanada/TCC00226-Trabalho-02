@@ -73,4 +73,8 @@ public class User {
             favorites.add(article);
         }
     }
+
+    public void removeFavorite(Article article) {
+        favorites.remove(article);
+    }
 }

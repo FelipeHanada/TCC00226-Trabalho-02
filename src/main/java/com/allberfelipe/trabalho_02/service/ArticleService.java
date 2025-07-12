@@ -41,6 +41,10 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+    public Page<Article> getFavoriteArticles(long userId, Pageable pageable) {
+        return articleRepository.findFavoriteArticlesByUserId(userId, pageable);
+    }
+
     public void addFavorite(long userId, long articleId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -52,7 +56,14 @@ public class ArticleService {
         userRepository.save(user);
     }
 
-    public Page<Article> getFavoriteArticles(long userId, Pageable pageable) {
-        return articleRepository.findFavoriteArticlesByUserId(userId, pageable);
+    public void removeFavorite(long userId, long articleId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new ArticleNotFoundException("Article not found"));
+
+        user.removeFavorite(article);
+        userRepository.save(user);
     }
 }

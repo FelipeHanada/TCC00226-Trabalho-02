@@ -54,17 +54,6 @@ public class ArticleController {
         return articleService.createArticle(article);
     }
 
-    @PostMapping("favorite/{articleId}")
-    public void addFavorite(
-            @PathVariable("articleId") long articleId,
-            @RequestParam(value = "token") String token
-    ) {
-        User loggedUser = authService.getUserByToken(token)
-                .orElseThrow(() -> new TokenNotValidException("Token not found"));
-
-        articleService.addFavorite(loggedUser.getId(), articleId);
-    }
-
     @GetMapping("favorite/{token}")
     public PageResult<Article> getFavoriteArticles(
             @PathVariable("token") String token,
@@ -77,5 +66,27 @@ public class ArticleController {
         Pageable pageable = PageRequest.of(pageIndex, pageSize);
         Page<Article> page = articleService.getFavoriteArticles(loggedUser.getId(), pageable);
         return new PageResult<>(page);
+    }
+
+    @PostMapping("favorite/{article_id}")
+    public void addFavorite(
+            @PathVariable("article_id") long articleId,
+            @RequestParam(value = "token") String token
+    ) {
+        User loggedUser = authService.getUserByToken(token)
+                .orElseThrow(() -> new TokenNotValidException("Token not found"));
+
+        articleService.addFavorite(loggedUser.getId(), articleId);
+    }
+
+    @PostMapping("favorite/remove/{article_id}")
+    public void removeFavorite(
+            @PathVariable("article_id") long articleId,
+            @RequestParam(value = "token") String token
+    ) {
+        User loggedUser = authService.getUserByToken(token)
+                .orElseThrow(() -> new TokenNotValidException("Token not found"));
+
+        articleService.removeFavorite(loggedUser.getId(), articleId);
     }
 }
