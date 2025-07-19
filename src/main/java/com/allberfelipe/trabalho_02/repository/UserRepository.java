@@ -15,5 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.id = :id")
     Optional<User> findByIdWithLock(@Param("id") Long id);
 
+    Optional<User> findByEmail(@Param("email") String email);
+
     Optional<User> findByEmailAndPasswordHash(@Param("email") String email, @Param("passwordHash") String passwordHash);
 }

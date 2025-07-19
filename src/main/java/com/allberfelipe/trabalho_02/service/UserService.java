@@ -3,6 +3,7 @@ package com.allberfelipe.trabalho_02.service;
 import com.allberfelipe.trabalho_02.exception.UserNotFoundException;
 import com.allberfelipe.trabalho_02.model.User;
 import com.allberfelipe.trabalho_02.repository.UserRepository;
+import com.allberfelipe.trabalho_02.util.PasswordHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,8 +26,22 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public User createUser(
+            String email,
+            String password,
+            String firstName,
+            String lastName,
+            String aboutMe,
+            String phoneNumber
+    ) {
+        return userRepository.save(new User(
+                email,
+                PasswordHash.hashPassword(password),
+                firstName,
+                lastName,
+                aboutMe,
+                phoneNumber
+        ));
     }
 
     @Transactional

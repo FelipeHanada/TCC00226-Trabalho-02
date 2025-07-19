@@ -1,8 +1,10 @@
 package com.allberfelipe.trabalho_02.controller;
 
+import com.allberfelipe.trabalho_02.dto.UserCreateRequest;
 import com.allberfelipe.trabalho_02.model.PageResult;
 import com.allberfelipe.trabalho_02.model.User;
 import com.allberfelipe.trabalho_02.service.UserService;
+import com.allberfelipe.trabalho_02.util.PasswordHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,8 +30,15 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public User createUser(@RequestBody UserCreateRequest user) {
+        return userService.createUser(
+                user.getEmail(),
+                user.getPassword(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getAboutMe(),
+                user.getPhoneNumber()
+            );
     }
 
     @PatchMapping

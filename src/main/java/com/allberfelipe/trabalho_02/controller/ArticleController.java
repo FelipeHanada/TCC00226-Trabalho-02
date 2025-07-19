@@ -79,7 +79,7 @@ public class ArticleController {
         articleService.addFavorite(loggedUser.getId(), articleId);
     }
 
-    @PostMapping("favorite/remove/{article_id}")
+    @DeleteMapping("favorite/remove/{article_id}")
     public void removeFavorite(
             @PathVariable("article_id") long articleId,
             @RequestParam(value = "token") String token
