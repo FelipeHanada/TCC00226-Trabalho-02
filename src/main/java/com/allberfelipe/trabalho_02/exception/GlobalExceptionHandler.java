@@ -20,7 +20,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             UserNotFoundException.class,
             ArticleNotFoundException.class,
-            EntityNotFoundException.class
+            EntityNotFoundException.class,
+            IncorrectPasswordException.class,
+            TokenNotValidException.class
     })
     public ResponseEntity<ErrorResponse> handleEntityNotFound(
             Exception e, HttpServletRequest request) {

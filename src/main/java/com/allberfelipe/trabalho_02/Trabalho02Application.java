@@ -2,14 +2,16 @@ package com.allberfelipe.trabalho_02;
 
 import com.allberfelipe.trabalho_02.model.Article;
 import com.allberfelipe.trabalho_02.model.User;
-import com.allberfelipe.trabalho_02.repository.ArticleRepository;
-import com.allberfelipe.trabalho_02.repository.UserRepository;
 import com.allberfelipe.trabalho_02.service.ArticleService;
 import com.allberfelipe.trabalho_02.service.UserService;
+import com.allberfelipe.trabalho_02.util.MDFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.time.LocalDateTime;
+
 
 @SpringBootApplication
 public class Trabalho02Application implements CommandLineRunner {
@@ -26,31 +28,24 @@ public class Trabalho02Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-
-		for (int i=1; i<=10; i++) {
-			userService.createUser(
-					"email" + i + "@domain.br",
-					"1234",
-					"nome",
-					"sobrenome",
-					"about_me",
-					"00123456789"
-			);
-		}
-
 		User user = userService.createUser(
-				"email101@domain.br",
-				"1234",
-				"nome",
-				"sobrenome",
-				"about_me",
+				"marco_antonitos@gmail.com",
+				"senha",
+				"Marco",
+				"Antónitos",
+				"Sou Marco.",
 				"00123456789"
 		);
 
-		Article article1 = new Article("title1", "description1", "", "conrtent", user);
+		String markdownContent = MDFileUtil.readMarkdownFile("torta-morango.md");
+		Article article1 = new Article(
+				"Receita Completa de Torta de Morango",
+				"A torta de morango é uma sobremesa clássica e deliciosa...",
+				"https://tse2.mm.bing.net/th/id/OIP.MM9grg3iJYM-etUenkdzAgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3",
+				markdownContent,
+				LocalDateTime.now(),
+				user
+		);
 		articleService.createArticle(article1);
-
-		Article article2 = new Article("title2", "description2", "", "conrtent", user);
-		articleService.createArticle(article2);
 	}
 }

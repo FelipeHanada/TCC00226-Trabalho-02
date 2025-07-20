@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -35,6 +35,8 @@ public class Article {
     @Column(name = "content_md", columnDefinition = "MEDIUMTEXT")
     private String contentMD;
 
+    private LocalDateTime publishedAt;
+
     @ManyToOne
     @NotNull
     @JoinColumn(nullable = false)
@@ -44,11 +46,19 @@ public class Article {
     @JsonIgnore
     private Set<User> favoritedBy;
 
-    public Article(String title, String description, String cardImage, String contentMD, User author) {
+    public Article(
+            String title,
+            String description,
+            String cardImage,
+            String contentMD,
+            LocalDateTime publishedAt,
+            User author
+    ) {
         this.title = title;
         this.description = description;
         this.cardImage = cardImage;
         this.contentMD = contentMD;
+        this.publishedAt = publishedAt;
         this.author = author;
     }
 }

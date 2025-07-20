@@ -24,13 +24,9 @@ public class AuthService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        System.out.println(password);
-        System.out.println(user.getPasswordHash());
-        System.out.println(PasswordHash.verifyPassword(password, user.getPasswordHash()));
-
         if (!PasswordHash.verifyPassword(password, user.getPasswordHash())) {
             throw new IncorrectPasswordException("Password incorrect.");
-        };
+        }
 
         return user;
     }
