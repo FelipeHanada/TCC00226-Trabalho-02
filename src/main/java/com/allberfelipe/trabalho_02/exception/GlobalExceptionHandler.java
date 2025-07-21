@@ -22,7 +22,8 @@ public class GlobalExceptionHandler {
             ArticleNotFoundException.class,
             EntityNotFoundException.class,
             IncorrectPasswordException.class,
-            TokenNotValidException.class
+            TokenNotValidException.class,
+            InvalidPasswordException.class
     })
     public ResponseEntity<ErrorResponse> handleEntityNotFound(
             Exception e, HttpServletRequest request) {

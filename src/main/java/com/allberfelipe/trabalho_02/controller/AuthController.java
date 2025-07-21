@@ -30,8 +30,8 @@ public class AuthController {
         return new TokenResponse(jwtToken);
     }
 
-    @GetMapping("user/{token}")
-    public User user(@PathVariable("token") String token) {
+    @GetMapping("user")
+    public User user(@RequestParam("token") String token) {
         Optional<User> loggedUser = authService.getUserByToken(token);
 
         if (loggedUser.isEmpty())

@@ -1,5 +1,6 @@
 package com.allberfelipe.trabalho_02.service;
 
+import com.allberfelipe.trabalho_02.exception.InvalidPasswordException;
 import com.allberfelipe.trabalho_02.exception.UserNotFoundException;
 import com.allberfelipe.trabalho_02.model.User;
 import com.allberfelipe.trabalho_02.repository.UserRepository;
@@ -34,6 +35,12 @@ public class UserService {
             String aboutMe,
             String phoneNumber
     ) {
+        final String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$";
+
+        if (!password.matches(passwordRegex)) {
+            throw new InvalidPasswordException("A senha deve ter no mínimo 8 caracteres, contendo ao menos uma letra minúscula, uma maiúscula e um caractere especial.");
+        }
+
         return userRepository.save(new User(
                 email,
                 PasswordHash.hashPassword(password),

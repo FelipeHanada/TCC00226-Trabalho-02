@@ -30,7 +30,7 @@ public class Trabalho02Application implements CommandLineRunner {
 	public void run(String... args) {
 		User user1 = userService.createUser(
 				"marco_antonitos@gmail.com",
-				"senha",
+				"Abc#1234",
 				"Marco",
 				"Antónitos",
 				"Sou Marco.",
@@ -39,7 +39,7 @@ public class Trabalho02Application implements CommandLineRunner {
 
 		User user2 = userService.createUser(
 				"joao_vitor@gmail.com",
-				"senha",
+				"Abc#1234",
 				"Joao",
 				"Vitor",
 				"Sou JV.",
@@ -48,7 +48,7 @@ public class Trabalho02Application implements CommandLineRunner {
 
 		userService.createUser(
 				"felipehanada@gmail.com",
-				"senha",
+				"Abc#1234",
 				"Felipe",
 				"Hanada",
 				"about me.",
@@ -96,6 +96,24 @@ public class Trabalho02Application implements CommandLineRunner {
 				"A torta de morango é uma sobremesa clássica e deliciosa...",
 				"https://tse2.mm.bing.net/th/id/OIP.MM9grg3iJYM-etUenkdzAgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3",
 				MDFileUtil.readMarkdownFile("torta-morango.md"),
+				LocalDateTime.now(),
+				user2
+		));
+
+		articleService.createArticle(new Article(
+				"Torta de Limão",
+				"Torta de limão torta de limão limão...",
+				"https://tse3.mm.bing.net/th/id/OIP.b7myN7-zeZUUpZWFqqkRyAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
+				MDFileUtil.readMarkdownFile("torta-de-limao.md"),
+				LocalDateTime.now(),
+				user2
+		));
+
+		articleService.createArticle(new Article(
+				"maca-do-amor",
+				"Maça vermelha...",
+				"https://th.bing.com/th/id/OIP.Co9DgyslQf8vwWY_TJSAkQHaFV?w=225&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
+				MDFileUtil.readMarkdownFile("maca-do-amor.md"),
 				LocalDateTime.now(),
 				user2
 		));
