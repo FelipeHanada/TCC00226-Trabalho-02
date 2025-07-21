@@ -8,8 +8,7 @@ import com.allberfelipe.trabalho_02.util.TokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
+@CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("auth")
 public class AuthController {
