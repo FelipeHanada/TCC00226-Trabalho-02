@@ -17,13 +17,12 @@ public class FavoriteController {
 
     @Autowired
     private FavoriteService favoriteService;
-
     @Autowired
     private AuthService authService;
 
     @GetMapping
     public PageResult<Article> getFavoriteArticles(
-            @RequestParam(value = "token") String token,
+            @RequestHeader("Authorization") String token,
             @RequestParam(value = "page", defaultValue = "0") int pageIndex,
             @RequestParam(value = "pageSize", defaultValue = "5") int pageSize
     ) {
@@ -36,8 +35,8 @@ public class FavoriteController {
 
     @PostMapping("{article_id}")
     public void addFavorite(
-            @PathVariable("article_id") long articleId,
-            @RequestParam(value = "token") String token
+            @RequestHeader("Authorization") String token,
+            @PathVariable("article_id") long articleId
     ) {
         User loggedUser = authService.validateToken(token);
 
@@ -46,8 +45,8 @@ public class FavoriteController {
 
     @DeleteMapping("{article_id}")
     public void removeFavorite(
-            @PathVariable("article_id") long articleId,
-            @RequestParam(value = "token") String token
+            @RequestHeader("Authorization") String token,
+            @PathVariable("article_id") long articleId
     ) {
         User loggedUser = authService.validateToken(token);
 

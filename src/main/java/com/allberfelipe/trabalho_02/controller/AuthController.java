@@ -1,7 +1,6 @@
 package com.allberfelipe.trabalho_02.controller;
 
 import com.allberfelipe.trabalho_02.dto.LoginRequest;
-import com.allberfelipe.trabalho_02.exception.TokenNotValidException;
 import com.allberfelipe.trabalho_02.model.User;
 import com.allberfelipe.trabalho_02.service.AuthService;
 import com.allberfelipe.trabalho_02.service.JwtService;
@@ -17,7 +16,6 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
-
     @Autowired
     private JwtService jwtService;    
 
@@ -30,7 +28,7 @@ public class AuthController {
     }
 
     @GetMapping("user")
-    public User user(@RequestParam("token") String token) {
+    public User user(@RequestHeader("Authorization") String token) {
         return authService.validateToken(token);
     }
 }
