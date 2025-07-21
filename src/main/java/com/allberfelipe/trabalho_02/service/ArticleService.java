@@ -7,10 +7,12 @@ import com.allberfelipe.trabalho_02.model.ArticleComment;
 import com.allberfelipe.trabalho_02.model.User;
 import com.allberfelipe.trabalho_02.repository.ArticleRepository;
 import com.allberfelipe.trabalho_02.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,14 +46,23 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+    @Transactional
     public Article updateArticle(Article article) {
-        articleRepository.findByIdWithLock(article.getId())
+        Article existingArticle = articleRepository.findByIdWithLock(article.getId())
                 .orElseThrow(() -> new ArticleNotFoundException(
                         "Article id: " + article.getId() + " not found."
                 ));
-        return articleRepository.save(article);
+
+        existingArticle.setTitle(article.getTitle());
+        existingArticle.setDescription(article.getDescription());
+        existingArticle.setContentMD(article.getContentMD());
+        existingArticle.setCardImage(article.getCardImage());
+        existingArticle.setPrice(article.getPrice());
+    
+        return articleRepository.save(existingArticle);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void deleteArticle(long id) {
         articleRepository.deleteById(id);
     }
