@@ -56,7 +56,7 @@ public class ArticleController {
         return articleService.createArticle(article);
     }
 
-    @PostMapping
+    @PatchMapping
     public Article updateArticle(@RequestBody Article article) {
         return articleService.updateArticle(article);
     }
