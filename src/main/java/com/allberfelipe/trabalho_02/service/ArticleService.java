@@ -1,9 +1,7 @@
 package com.allberfelipe.trabalho_02.service;
 
 import com.allberfelipe.trabalho_02.exception.ArticleNotFoundException;
-import com.allberfelipe.trabalho_02.exception.UserNotFoundException;
 import com.allberfelipe.trabalho_02.model.Article;
-import com.allberfelipe.trabalho_02.model.ArticleComment;
 import com.allberfelipe.trabalho_02.model.User;
 import com.allberfelipe.trabalho_02.repository.ArticleRepository;
 import com.allberfelipe.trabalho_02.repository.UserRepository;
@@ -22,8 +20,6 @@ public class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     public List<Article> getArticles() { return articleRepository.findAll(); }
 
@@ -64,6 +60,13 @@ public class ArticleService {
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteArticle(long id) {
-        articleRepository.deleteById(id);
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new ArticleNotFoundException("Article not found"));
+
+        for (User user : article.getFavoritedBy()) {
+            user.getFavorites().remove(article);
+        }
+
+        articleRepository.delete(article);
     }
 }

@@ -44,7 +44,7 @@ public class Article {
     @JoinColumn(nullable = false)
     private User author;
 
-    @ManyToMany(mappedBy = "favorites", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "favorites")
     @JsonIgnore
     private Set<User> favoritedBy;
 
