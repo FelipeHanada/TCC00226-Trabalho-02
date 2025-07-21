@@ -12,8 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-
 @CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("article")
@@ -57,8 +55,15 @@ public class ArticleController {
     }
 
     @PatchMapping
-    public Article updateArticle(@RequestBody Article article) {
+    public Article updateArticle(
+            @RequestBody Article article
+    ) {
         return articleService.updateArticle(article);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteUser(@PathVariable("id") long id) {
+        articleService.deleteArticle(id);
     }
 
     @GetMapping("favorite")

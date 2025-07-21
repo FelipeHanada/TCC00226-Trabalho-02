@@ -44,7 +44,15 @@ public class ArticleService {
     }
 
     public Article updateArticle(Article article) {
+        articleRepository.findByIdWithLock(article.getId())
+                .orElseThrow(() -> new ArticleNotFoundException(
+                        "Article id: " + article.getId() + " not found."
+                ));
         return articleRepository.save(article);
+    }
+
+    public void deleteArticle(long id) {
+        articleRepository.deleteById(id);
     }
 
     public Page<Article> getFavoriteArticles(long userId, Pageable pageable) {
