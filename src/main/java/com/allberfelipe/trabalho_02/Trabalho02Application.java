@@ -83,12 +83,14 @@ public class Trabalho02Application implements CommandLineRunner {
 				article1
 		));
 
-		articleCommentService.createArticleComment(new ArticleComment(
-				"Muito bom!!!",
-				LocalDateTime.now(),
-				user3,
-				article1
-		));
+		for (int i=0; i<100; i++) {
+			articleCommentService.createArticleComment(new ArticleComment(
+					"Muito bom!!!",
+					LocalDateTime.now(),
+					user3,
+					article1
+			));
+		}
 
 		articleService.createArticle(new Article(
 				"Receita de Bolo de Chocolate PREMIUM",
@@ -149,5 +151,17 @@ public class Trabalho02Application implements CommandLineRunner {
 				LocalDateTime.now(),
 				user2
 		));
+
+		for (int i=0; i<100; i++) {
+			articleService.createArticle(new Article(
+					"Receita de Maçã do Amor " + i,
+					"Maça vermelha...",
+					"https://th.bing.com/th/id/OIP.Co9DgyslQf8vwWY_TJSAkQHaFV?w=225&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
+					MDFileUtil.readMarkdownFile("maca-do-amor.md"),
+					4498,
+					LocalDateTime.now(),
+					user2
+			));
+		}
 	}
 }
