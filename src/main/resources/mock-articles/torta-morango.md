@@ -1,6 +1,7 @@
 # Receita de Torta de Morango
 
 ## Ingredientes
+ppa
 
 ### Para a massa
 - 2 xícaras de farinha de trigo (de preferência peneirada para uma textura mais leve)
