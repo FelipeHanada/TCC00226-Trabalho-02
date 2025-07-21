@@ -9,6 +9,8 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,8 +21,6 @@ public class ArticleComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String title;
 
     @Lob
     @Column(columnDefinition = "TINYTEXT")
@@ -36,16 +36,15 @@ public class ArticleComment {
     @ManyToOne
     @NotNull
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private Article article;
 
     public ArticleComment(
-            String title,
             String content,
             LocalDateTime publishedAt,
             User author,
             Article article
     ) {
-        this.title = title;
         this.content = content;
         this.publishedAt = publishedAt;
         this.author = author;

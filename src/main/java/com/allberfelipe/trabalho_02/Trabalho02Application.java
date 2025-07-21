@@ -1,7 +1,9 @@
 package com.allberfelipe.trabalho_02;
 
 import com.allberfelipe.trabalho_02.model.Article;
+import com.allberfelipe.trabalho_02.model.ArticleComment;
 import com.allberfelipe.trabalho_02.model.User;
+import com.allberfelipe.trabalho_02.service.ArticleCommentService;
 import com.allberfelipe.trabalho_02.service.ArticleService;
 import com.allberfelipe.trabalho_02.service.UserService;
 import com.allberfelipe.trabalho_02.util.MDFileUtil;
@@ -21,6 +23,8 @@ public class Trabalho02Application implements CommandLineRunner {
 
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private ArticleCommentService articleCommentService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Trabalho02Application.class, args);
@@ -46,7 +50,7 @@ public class Trabalho02Application implements CommandLineRunner {
 				"00123456789"
 		);
 
-		userService.createUser(
+		User user3 = userService.createUser(
 				"felipehanada@gmail.com",
 				"Abc#1234",
 				"Felipe",
@@ -55,7 +59,7 @@ public class Trabalho02Application implements CommandLineRunner {
 				"00123456789"
 		);
 
-		articleService.createArticle(new Article(
+		Article article1 = articleService.createArticle(new Article(
 				"Receita de Bolinho de Chuva",
 				"Bolinho de chuvaaaaaaa...",
 				"https://guiadacozinha.com.br/wp-content/uploads/2022/10/bolinho-de-chuva-tradicional-1.jpg",
@@ -63,6 +67,27 @@ public class Trabalho02Application implements CommandLineRunner {
 				2990,
 				LocalDateTime.now(),
 				user1
+		));
+
+		articleCommentService.createArticleComment(new ArticleComment(
+				"Muito bom",
+				LocalDateTime.now(),
+				user1,
+				article1
+		));
+
+		articleCommentService.createArticleComment(new ArticleComment(
+				"Muito bom!",
+				LocalDateTime.now(),
+				user2,
+				article1
+		));
+
+		articleCommentService.createArticleComment(new ArticleComment(
+				"Muito bom!!!",
+				LocalDateTime.now(),
+				user3,
+				article1
 		));
 
 		articleService.createArticle(new Article(
