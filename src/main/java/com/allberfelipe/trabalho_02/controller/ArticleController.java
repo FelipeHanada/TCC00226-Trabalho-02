@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("article")
@@ -54,9 +56,14 @@ public class ArticleController {
         return articleService.createArticle(article);
     }
 
-    @GetMapping("favorite/{token}")
+    @PostMapping
+    public Article updateArticle(@RequestBody Article article) {
+        return articleService.updateArticle(article);
+    }
+
+    @GetMapping("favorite")
     public PageResult<Article> getFavoriteArticles(
-            @PathVariable("token") String token,
+            @RequestParam(value = "token") String token,
             @RequestParam(value = "page", defaultValue = "0") int pageIndex,
             @RequestParam(value = "pageSize", defaultValue = "5") int pageSize
     ) {
