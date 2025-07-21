@@ -9,14 +9,11 @@ import com.allberfelipe.trabalho_02.util.PasswordHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private JwtService jwtService;
 
