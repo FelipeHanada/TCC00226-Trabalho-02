@@ -62,7 +62,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteUser(@PathVariable("id") long id) {
+    public void deleteArticle(@PathVariable("id") long id) {
         articleService.deleteArticle(id);
     }
 
