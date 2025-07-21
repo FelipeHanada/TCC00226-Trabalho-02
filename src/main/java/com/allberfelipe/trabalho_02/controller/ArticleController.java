@@ -20,7 +20,6 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
-
     @Autowired
     private AuthService authService;
     @Autowired

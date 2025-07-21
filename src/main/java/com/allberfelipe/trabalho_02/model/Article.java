@@ -35,6 +35,8 @@ public class Article {
     @Column(name = "content_md", columnDefinition = "MEDIUMTEXT")
     private String contentMD;
 
+    private Integer price;
+
     private LocalDateTime publishedAt;
 
     @ManyToOne
@@ -51,6 +53,7 @@ public class Article {
             String description,
             String cardImage,
             String contentMD,
+            Integer price,
             LocalDateTime publishedAt,
             User author
     ) {
@@ -59,6 +62,7 @@ public class Article {
         this.cardImage = cardImage;
         this.contentMD = contentMD;
         this.publishedAt = publishedAt;
+        this.price = price;
         this.author = author;
     }
 }
