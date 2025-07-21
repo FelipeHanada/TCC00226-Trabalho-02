@@ -4,14 +4,12 @@ import com.allberfelipe.trabalho_02.dto.UserCreateRequest;
 import com.allberfelipe.trabalho_02.model.PageResult;
 import com.allberfelipe.trabalho_02.model.User;
 import com.allberfelipe.trabalho_02.service.UserService;
-import com.allberfelipe.trabalho_02.util.PasswordHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("user")
 public class UserController {

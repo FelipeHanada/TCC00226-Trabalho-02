@@ -31,16 +31,13 @@ public class AuthService {
         return user;
     }
 
-    public Optional<User> getUserByToken(String token) {
+    public User validateToken(String token) throws TokenNotValidException {
         if (!jwtService.validateToken(token))
             throw new TokenNotValidException("Invalid token.");
 
         Long userId = jwtService.getUserIdFromToken(token);
-        Optional<User> loggedUser = userRepository.findById(userId);
 
-        if (loggedUser.isEmpty())
-            throw new TokenNotValidException("Logged user not found.");
-
-        return loggedUser;
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new TokenNotValidException("Logged user not found."));
     }
 }

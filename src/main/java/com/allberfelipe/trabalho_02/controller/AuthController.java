@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("auth")
 public class AuthController {
@@ -32,11 +31,6 @@ public class AuthController {
 
     @GetMapping("user")
     public User user(@RequestParam("token") String token) {
-        Optional<User> loggedUser = authService.getUserByToken(token);
-
-        if (loggedUser.isEmpty())
-            throw new TokenNotValidException("Logged user not found.");
-
-        return loggedUser.get();
+        return authService.validateToken(token);
     }
 }

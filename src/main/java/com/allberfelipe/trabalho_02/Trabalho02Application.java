@@ -101,7 +101,7 @@ public class Trabalho02Application implements CommandLineRunner {
 		));
 
 		articleService.createArticle(new Article(
-				"Torta de Limão",
+				"Receita de Torta de Limão",
 				"Torta de limão torta de limão limão...",
 				"https://tse3.mm.bing.net/th/id/OIP.b7myN7-zeZUUpZWFqqkRyAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
 				MDFileUtil.readMarkdownFile("torta-de-limao.md"),
@@ -110,7 +110,7 @@ public class Trabalho02Application implements CommandLineRunner {
 		));
 
 		articleService.createArticle(new Article(
-				"maca-do-amor",
+				"Receita de Maçã do Amor",
 				"Maça vermelha...",
 				"https://th.bing.com/th/id/OIP.Co9DgyslQf8vwWY_TJSAkQHaFV?w=225&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
 				MDFileUtil.readMarkdownFile("maca-do-amor.md"),
